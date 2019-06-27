@@ -6,6 +6,6 @@ import com.rba.architecture.movie.domain.model.MovieModel
 
 interface MovieDataStore {
 
-    suspend fun getMovieList(api: String, movieCallback: MovieCallback<MovieModel, ErrorModel>)
+    suspend fun getMovieList(movieCallback: MovieCallback<MovieModel, ErrorModel>)
 
 }

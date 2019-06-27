@@ -7,8 +7,8 @@ import com.rba.architecture.movie.domain.repository.MovieRepository
 
 class MovieUseCase(private val movieRepository: MovieRepository) {
 
-    suspend fun getMovieList(api: String, movieCallback: MovieCallback<MovieModel, ErrorModel>) {
-        movieRepository.getMovieList(api, movieCallback)
+    suspend fun getMovieList(movieCallback: MovieCallback<MovieModel, ErrorModel>) {
+        movieRepository.getMovieList(movieCallback)
     }
 
 }

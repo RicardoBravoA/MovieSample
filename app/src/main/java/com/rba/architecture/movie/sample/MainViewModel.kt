@@ -29,8 +29,7 @@ class MainViewModel(private val movieUseCase: MovieUseCase) : ScopedViewModel() 
 
     fun onRefresh() {
         launch {
-            movieUseCase.getMovieList(
-                "17fc214660eff995c54514f9bdf6a5fd", object : MovieCallback<MovieModel, ErrorModel> {
+            movieUseCase.getMovieList(object : MovieCallback<MovieModel, ErrorModel> {
                     override fun onSuccess(t: MovieModel) {
                         _model.value = UiViewModel.Content(t)
                         Log.i("z- inSuccess", t.toString())

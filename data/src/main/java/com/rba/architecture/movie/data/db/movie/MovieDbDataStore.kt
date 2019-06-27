@@ -11,7 +11,7 @@ class MovieDbDataStore(private val movieDao: MovieDao) : MovieDataStore {
 
     private val movieMapper: MovieMapper = MovieMapper()
 
-    override suspend fun getMovieList(api: String, movieCallback: MovieCallback<MovieModel, ErrorModel>) {
+    override suspend fun getMovieList(movieCallback: MovieCallback<MovieModel, ErrorModel>) {
         val movieEntityList: List<MovieEntity> = movieDao.getMovieList()
         movieCallback.onSuccess(movieMapper.transformDbForWsList(movieEntityList))
     }

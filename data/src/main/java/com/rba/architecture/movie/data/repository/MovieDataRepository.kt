@@ -8,9 +8,9 @@ import com.rba.architecture.movie.domain.repository.MovieRepository
 
 class MovieDataRepository(private val movieDataStoreFactory: MovieDataStoreFactory) : MovieRepository {
 
-    override suspend fun getMovieList(api: String, movieCallback: MovieCallback<MovieModel, ErrorModel>) {
+    override suspend fun getMovieList(movieCallback: MovieCallback<MovieModel, ErrorModel>) {
         val movieDataStore = movieDataStoreFactory.create()
-        movieDataStore.getMovieList(api, movieCallback)
+        movieDataStore.getMovieList(movieCallback)
     }
 
 }

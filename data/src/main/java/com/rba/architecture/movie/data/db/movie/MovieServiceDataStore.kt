@@ -21,8 +21,8 @@ class MovieServiceDataStore(private val movieDao: MovieDao) : MovieDataStore {
     private val movieMapper: MovieMapper = MovieMapper()
     private val errorMapper: ErrorMapper = ErrorMapper()
 
-    override suspend fun getMovieList(api: String, movieCallback: MovieCallback<MovieModel, ErrorModel>) {
-        val call = ApiManager.apiManager().movieList(api)
+    override suspend fun getMovieList(movieCallback: MovieCallback<MovieModel, ErrorModel>) {
+        val call = ApiManager.apiManager().movieList()
         call.enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {

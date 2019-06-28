@@ -2,6 +2,7 @@ package com.rba.architecture.movie.data.db.movie
 
 import android.content.Context
 import com.rba.architecture.movie.data.db.AppDatabase
+import com.rba.architecture.movie.data.service.movie.MovieServiceDataStore
 import com.rba.architecture.movie.data.util.isInternet
 
 class MovieDataStoreFactory(private val context: Context) {

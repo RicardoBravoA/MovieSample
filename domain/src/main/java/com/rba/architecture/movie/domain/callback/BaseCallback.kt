@@ -1,6 +1,6 @@
 package com.rba.architecture.movie.domain.callback
 
-interface MovieCallback<T, R> {
+interface BaseCallback<T, R> {
 
     fun onSuccess(t: T)
 

@@ -3,7 +3,7 @@ package com.rba.architecture.movie.sample.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.rba.architecture.movie.data.util.ErrorUtil
-import com.rba.architecture.movie.domain.callback.MovieCallback
+import com.rba.architecture.movie.domain.callback.BaseCallback
 import com.rba.architecture.movie.domain.model.DefaultErrorModel
 import com.rba.architecture.movie.domain.model.ErrorModel
 import com.rba.architecture.movie.domain.model.MovieModel
@@ -31,7 +31,7 @@ class MainViewModel(private val movieUseCase: MovieUseCase) : ScopedViewModel() 
     fun loadData() {
         launch {
             mutableModel.value = UiViewModel.Loading(true)
-            movieUseCase.getMovieList(object : MovieCallback<MovieModel, ErrorModel> {
+            movieUseCase.getMovieList(object : BaseCallback<MovieModel, ErrorModel> {
                 override fun onSuccess(t: MovieModel) {
                     mutableModel.value = UiViewModel.ShowData(t)
                     mutableModel.value = UiViewModel.Loading(false)

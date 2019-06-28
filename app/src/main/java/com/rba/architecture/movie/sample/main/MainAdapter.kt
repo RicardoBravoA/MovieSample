@@ -19,12 +19,7 @@ class MainAdapter(private val listener: (MovieModel.ResultResponse) -> Unit) :
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder =
-        MainViewHolder(
-            parent.inflate(
-                R.layout.item_list,
-                false
-            )
-        )
+        MainViewHolder(parent.inflate(R.layout.item_list, false))
 
     override fun getItemCount(): Int = list.size
 

@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.rba.architecture.movie.data.db.dao.MovieDao
-import com.rba.architecture.movie.data.db.model.MovieEntity
+import com.rba.architecture.movie.data.db.entity.MovieEntity
 import com.rba.architecture.movie.data.db.util.Converters
 
 @Database(entities = [MovieEntity::class], version = 1, exportSchema = false)

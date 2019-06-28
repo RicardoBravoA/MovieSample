@@ -1,10 +1,10 @@
 package com.rba.architecture.movie.data.mapper
 
-import com.rba.architecture.movie.data.db.model.MovieEntity
+import com.rba.architecture.movie.data.db.entity.MovieEntity
 import com.rba.architecture.movie.data.entity.response.MovieResponse
 import com.rba.architecture.movie.domain.model.MovieModel
 
-class MovieMapper {
+object MovieMapper {
 
     private fun transform(movieResponse: MovieResponse.ResultResponse): MovieModel.ResultResponse {
 

@@ -1,4 +1,4 @@
-package com.rba.architecture.movie.data.db.model
+package com.rba.architecture.movie.data.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

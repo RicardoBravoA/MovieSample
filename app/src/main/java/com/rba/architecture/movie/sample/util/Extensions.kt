@@ -7,6 +7,7 @@ import android.widget.ImageView
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.rba.architecture.movie.sample.R
 import com.squareup.picasso.Picasso
 import kotlin.properties.Delegates
@@ -38,3 +39,8 @@ inline fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.diffUtil(
     }
 
 fun <T> lazyThreadSafetyNone(initializer: () -> T): Lazy<T> = lazy(LazyThreadSafetyMode.NONE, initializer)
+
+fun View.snackbar(message: String, length: Int = Snackbar.LENGTH_SHORT) {
+    val snack = Snackbar.make(this, message, length)
+    snack.show()
+}

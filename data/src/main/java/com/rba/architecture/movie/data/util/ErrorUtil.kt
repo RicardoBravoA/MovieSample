@@ -1,26 +1,23 @@
 package com.rba.architecture.movie.data.util
 
-import com.rba.architecture.movie.data.api.ApiManager
-import com.rba.architecture.movie.data.entity.response.ErrorResponse
-import retrofit2.Response
-import java.io.IOException
+import com.rba.architecture.movie.domain.model.DefaultErrorModel
 
 object ErrorUtil {
-    fun parseError(response: Response<*>): ErrorResponse? {
 
-        val converter = ApiManager.retrofit.responseBodyConverter<ErrorResponse>(
-            ErrorResponse::class.java,
-            arrayOfNulls<Annotation>(0)
-        )
+    fun errorHandler(error: Throwable): DefaultErrorModel {
 
-        val error: ErrorResponse
+        val errorException: RetrofitException =
+            if (error is RetrofitException) {
+                error
+            } else {
+                RetrofitException.retrofitException(error)
+            }
 
-        try {
-            error = converter.convert(response.errorBody()!!)!!
-        } catch (e: IOException) {
-            return ErrorResponse()
+        return when (errorException.kind) {
+            RetrofitException.Kind.HTTP -> errorException.getErrorBodyAs(DefaultErrorModel::class.java)!!
+            RetrofitException.Kind.NETWORK -> DefaultErrorModel()
+            else -> DefaultErrorModel()
         }
 
-        return error
     }
 }

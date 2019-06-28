@@ -1,4 +1,4 @@
-package com.rba.architecture.movie.sample
+package com.rba.architecture.movie.sample.main
 
 import android.os.Bundle
 import android.util.Log
@@ -7,7 +7,9 @@ import androidx.lifecycle.Observer
 import com.rba.architecture.movie.data.db.movie.MovieDataStoreFactory
 import com.rba.architecture.movie.data.repository.MovieDataRepository
 import com.rba.architecture.movie.domain.usecase.MovieUseCase
-import com.rba.architecture.movie.sample.MainViewModel.UiViewModel
+import com.rba.architecture.movie.sample.R
+import com.rba.architecture.movie.sample.main.MainViewModel.UiViewModel
+import com.rba.architecture.movie.sample.util.snackbar
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -22,6 +24,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        srlData.setOnRefreshListener {
+            mainViewModel.refresh()
+        }
+
         val movieDataRepository = MovieDataRepository(MovieDataStoreFactory(this))
         mainViewModel = MainViewModel(MovieUseCase(movieDataRepository))
 
@@ -34,12 +40,24 @@ class MainActivity : AppCompatActivity() {
     private fun updateUi(model: UiViewModel) {
 
         when (model) {
-            is UiViewModel.Content -> {
+            is UiViewModel.ShowData -> {
                 mainAdapter.list = model.movieModel.resultResponse!!
+
             }
 
-            is UiViewModel.Navigation -> Log.i("z- log", model.movie.toString())
-            UiViewModel.Refresh -> mainViewModel.onRefresh()
+            is UiViewModel.Loading -> {
+                srlData.isRefreshing = model.show
+            }
+
+            is UiViewModel.Navigation -> Log.i("z- click", model.movie.toString())
+
+            is UiViewModel.Refresh -> {
+                mainViewModel.loadData()
+            }
+
+            is UiViewModel.ShowError -> clData.snackbar(model.errorModel.statusMessage!!)
+
+            is UiViewModel.ShowFailure -> clData.snackbar(model.defaultErrorModel.message)
         }
     }
 

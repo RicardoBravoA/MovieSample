@@ -6,7 +6,7 @@ import com.rba.architecture.movie.data.db.model.MovieEntity
 import com.rba.architecture.movie.data.entity.response.MovieResponse
 import com.rba.architecture.movie.data.mapper.ErrorMapper
 import com.rba.architecture.movie.data.mapper.MovieMapper
-import com.rba.architecture.movie.data.util.ErrorUtil
+import com.rba.architecture.movie.data.util.RetrofitErrorUtil
 import com.rba.architecture.movie.domain.callback.MovieCallback
 import com.rba.architecture.movie.domain.model.ErrorModel
 import com.rba.architecture.movie.domain.model.MovieModel
@@ -38,7 +38,7 @@ class MovieServiceDataStore(private val movieDao: MovieDao) : MovieDataStore {
                     }
 
                 } else {
-                    val error = ErrorUtil.parseError(response)!!
+                    val error = RetrofitErrorUtil.parseError(response)!!
                     movieCallback.onError(errorMapper.transform(error))
                 }
             }

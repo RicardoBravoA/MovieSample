@@ -1,10 +1,10 @@
-package com.rba.architecture.movie.sample
+package com.rba.architecture.movie.sample.main
 
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.rba.architecture.movie.domain.model.MovieModel
+import com.rba.architecture.movie.sample.R
 import com.rba.architecture.movie.sample.util.diffUtil
 import com.rba.architecture.movie.sample.util.inflate
 import com.rba.architecture.movie.sample.util.loadUrl
@@ -18,13 +18,13 @@ class MainAdapter(private val listener: (MovieModel.ResultResponse) -> Unit) :
         areItemsTheSame = { old, new -> old.id == new.id }
     )
 
-    fun not(){
-        Log.i("z- data", list.size.toString())
-        notifyDataSetChanged()
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder =
-        MainViewHolder(parent.inflate(R.layout.item_list, false))
+        MainViewHolder(
+            parent.inflate(
+                R.layout.item_list,
+                false
+            )
+        )
 
     override fun getItemCount(): Int = list.size
 

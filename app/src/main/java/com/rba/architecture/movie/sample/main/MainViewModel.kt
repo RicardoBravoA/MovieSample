@@ -2,6 +2,7 @@ package com.rba.architecture.movie.sample.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.rba.architecture.movie.data.util.ErrorUtil
 import com.rba.architecture.movie.domain.callback.BaseCallback
 import com.rba.architecture.movie.domain.model.DefaultErrorModel
@@ -9,6 +10,8 @@ import com.rba.architecture.movie.domain.model.ErrorModel
 import com.rba.architecture.movie.domain.model.MovieModel
 import com.rba.architecture.movie.domain.usecase.MovieUseCase
 import com.rba.architecture.movie.sample.util.ScopedViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val movieUseCase: MovieUseCase) : ScopedViewModel() {
@@ -29,7 +32,7 @@ class MainViewModel(private val movieUseCase: MovieUseCase) : ScopedViewModel() 
     }
 
     fun loadData() {
-        launch {
+        GlobalScope.launch(Dispatchers.Main) {
             mutableModel.value = UiViewModel.Loading(true)
             movieUseCase.getMovieList(object : BaseCallback<MovieModel, ErrorModel> {
                 override fun onSuccess(t: MovieModel) {

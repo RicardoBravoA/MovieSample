@@ -24,15 +24,10 @@ class MovieServiceDataStore(private val movieDao: MovieDao) : MovieDataStore {
         call.enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {
-                    val userResponse = response.body()
-                    userResponse.let {
-                        val movieEntityList: List<MovieEntity> = MovieMapper.transformWsForDbList(userResponse!!)
-                        movieEntityList.map {
-                            GlobalScope.launch {
-                                movieDao.insertMovie(it)
-                            }
-                        }
-                        baseCallback.onSuccess(MovieMapper.transformResponseToModelList(userResponse))
+                    val movieResponse = response.body()
+                    movieResponse?.let {
+                        saveInDb(movieResponse)
+                        baseCallback.onSuccess(MovieMapper.transformResponseToModelList(movieResponse))
                     }
 
                 } else {
@@ -46,6 +41,15 @@ class MovieServiceDataStore(private val movieDao: MovieDao) : MovieDataStore {
             }
 
         })
+    }
+
+    private fun saveInDb(movieResponse: MovieResponse) {
+        val movieEntityList: List<MovieEntity> = MovieMapper.transformWsForDbList(movieResponse)
+        movieEntityList.map {
+            GlobalScope.launch {
+                movieDao.insertMovie(it)
+            }
+        }
     }
 
 }
